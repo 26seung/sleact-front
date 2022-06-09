@@ -11,7 +11,13 @@ interface Props {
 const Menu: FC<Props> = ({children, style, show, onCloseModal, closeButton}) => {
     const stopPropagation = useCallback((e)=> {
         e.stopPropagation();
-    },[])
+    },[]);
+
+    // show 가 false 면 모달 화면 안보이게
+    if(!show){
+        return null;
+    }
+
     return (
         <CreateMenu onClick={onCloseModal}>
             <div style={style} onClick={stopPropagation}>
