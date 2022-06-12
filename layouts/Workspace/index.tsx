@@ -31,15 +31,15 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
     const [newUrl, onChangeNewUrl, setNewUrl] = useInput('');
 
     // 
-    const {data: userData, error, mutate} = useSWR<IUser|false>('http://localhost:3095/api/users', fetcher,{
+    const {data: userData, error, mutate} = useSWR<IUser|false>('/api/users', fetcher,{
         dedupingInterval: 30000      // 캐시의 유지기간 , 2초동안은 1번만 요청이 감  , 서버에 요청 부담을 줄일수 있음
     });
     const { workspace } = useParams<{ workspace: string }>();
-    const {data: channelData} = useSWR<IChannel[]>(userData? `http://localhost:3095/api/workspaces/${workspace}/channels`:null, fetcher);
+    const {data: channelData} = useSWR<IChannel[]>(userData? `/api/workspaces/${workspace}/channels`:null, fetcher);
     //
 
     const onLogout = useCallback(()=> {
-        axios.post("http://localhost:3095/api/users/logout",
+        axios.post("/api/users/logout",
         null,{
             withCredentials: true,      // 쿠키를 서로 공유 하기 위해서 삽입
         })
@@ -175,8 +175,8 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
                 </form>
             </Modal>
             <CreateChannelModal show={showCreateChannelModal} onCloseModal={onCloseModal} setShowCreateChannelModal={setShowCreateChannelModal}/>
-            <InviteWorkspaceModal show={showInviteWorkspaceModal} onCloseModal={onCloseModal} setShowInviteWorkspaceModal={setShowCreateChannelModal}/>
-            <InviteChannelModal show={showInviteChannelModal} onCloseModal={onCloseModal} setShowInviteChannelModal={setShowCreateChannelModal}/>
+            <InviteWorkspaceModal show={showInviteWorkspaceModal} onCloseModal={onCloseModal} setShowInviteWorkspaceModal={setShowInviteWorkspaceModal}/>
+            <InviteChannelModal show={showInviteChannelModal} onCloseModal={onCloseModal} setShowInviteChannelModal={setShowInviteChannelModal}/>
         </div>
     )
 };

@@ -8,7 +8,7 @@ import { Button, Error, Form, Header, Input, Label, LinkContainer, Success } fro
 
 const SignUp = () => {
 
-    const {data, error, mutate} = useSWR('http://localhost:3095/api/users', fetcher);
+    const {data, error, mutate} = useSWR('/api/users', fetcher);
     const [email, onChangeEmail] = useInput('');
     const [nickname, onChangeNickname] = useInput('');
     const [password, setPassword] = useState('');
@@ -39,7 +39,7 @@ const SignUp = () => {
             setSignUpSuccess(true);
             setSignUpError('');     // 비동기 요청전에 state 사용 건은 초기화를 하고 진행하는것이 좋음 (이전 요청건이 남아있을수 있기 때문)
 
-            axios.post('http://localhost:3095/api/users',{
+            axios.post('/api/users',{
             email,nickname,password
         })
         .then((response)=>{

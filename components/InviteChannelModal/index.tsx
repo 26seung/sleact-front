@@ -32,8 +32,8 @@ const InviteChannelModal: FC<Props> = ({ show, onCloseModal, setShowInviteChanne
         .post(`/api/workspaces/${workspace}/channels/${channel}/members`, {
           email: newMember,
         })
-        .then(() => {
-          mutateMembers();
+        .then((res) => {
+          mutateMembers(res.data,false);    //  서버에 데이터를 보내지 않음
           setShowInviteChannelModal(false);
           setNewMember('');
         })

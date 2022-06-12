@@ -20,16 +20,16 @@ const CreateChannelModal: VFC<Props> = ({show, onCloseModal, setShowCreateChanne
     const {workspace, channel} = useParams<{workspace:string; channel:string}>();
 
     //
-    const {data: userData, error, mutate} = useSWR<IUser|false>('http://localhost:3095/api/users', fetcher,{
+    const {data: userData, error, mutate} = useSWR<IUser|false>('/api/users', fetcher,{
         dedupingInterval: 30000      // 캐시의 유지기간 , 30초동안은 1번만 요청이 감  , 서버에 요청 부담을 줄일수 있음
     });
-    const {data: channelData, mutate: mutateChannel} = useSWR<IChannel[]>(userData? `http://localhost:3095/api/workspaces/${workspace}/channels`:null, fetcher);
+    const {data: channelData, mutate: mutateChannel} = useSWR<IChannel[]>(userData? `/api/workspaces/${workspace}/channels`:null, fetcher);
     //
 
     const onCreateChannel = useCallback((e)=> {
         e.preventDefault();
         axios.post(
-          `http://localhost:3095/api/workspaces/${workspace}/channels`,
+          `/api/workspaces/${workspace}/channels`,
         {name: newChannel},
         {withCredentials: true}
         ).then((res)=>{
