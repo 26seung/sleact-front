@@ -13,6 +13,8 @@ import { Button, Input, Label } from "@pages/SignUp/style";
 import useInput from "@hooks/useInput";
 import Modal from "@components/Modal";
 import CreateChannelModal from "@components/CreateChannelModal";
+import InviteChannelModal from "@components/InviteChannelModal";
+import InviteWorkspaceModal from "@components/InviteWorkspaceModal";
 
 const Channel = loadable(() => import('@pages/Channel'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage'));
@@ -21,6 +23,8 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
 
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false);
+    const [showInviteWorkspaceModal, setShowInviteWorkspaceModal] = useState(false);
+    const [showInviteChannelModal, setShowInviteChannelModal] = useState(false);
     const [showWorkspaceModal, setShowWorkspaceModal] = useState(false);
     const [showCreateChannelModal, setShowCreateChannelModal] = useState(false);
     const [newWorkspace, onChangeNewWorkspace, setNewWorkspace] = useInput('');
@@ -81,6 +85,8 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
     const onCloseModal = useCallback(() => {
         setShowCreateWorkspaceModal(false);
         setShowCreateChannelModal(false);
+        setShowInviteWorkspaceModal(false);
+        setShowInviteChannelModal(false);
     },[])
     const toggleWorkspaceModal = useCallback(()=>{
         setShowWorkspaceModal((prev)=>!prev);
@@ -169,6 +175,8 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
                 </form>
             </Modal>
             <CreateChannelModal show={showCreateChannelModal} onCloseModal={onCloseModal} setShowCreateChannelModal={setShowCreateChannelModal}/>
+            <InviteWorkspaceModal show={showInviteWorkspaceModal} onCloseModal={onCloseModal} setShowInviteWorkspaceModal={setShowCreateChannelModal}/>
+            <InviteChannelModal show={showInviteChannelModal} onCloseModal={onCloseModal} setShowInviteChannelModal={setShowCreateChannelModal}/>
         </div>
     )
 };
