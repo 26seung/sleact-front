@@ -7,20 +7,21 @@ import React, { useCallback, useEffect, useRef, VFC } from 'react';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
+import useInput from '@hooks/useInput';
 
 interface Props {
   chat: string;
-  // onSubmitForm: (e: any) => void;
-  // onChangeChat: (e: any) => void;
+  onSubmitForm: (e: any) => void;
+  onChangeChat: (e: any) => void;
   // placeholder?: string;
 }
-const ChatBox: VFC<Props> = ({ chat }) => {
+const ChatBox: VFC<Props> = ({ chat, onSubmitForm, onChangeChat }) => {
   const { workspace } = useParams<{ workspace: string }>();
-  const { data: userData, error, mutate } = useSWR<IUser | false>('/api/users', fetcher, {
-    dedupingInterval: 2000, // 2초
-  });
+  const { data: userData, error, mutate } = useSWR<IUser | false>('/api/users', fetcher);
   const { data: memberData } = useSWR<IUser[]>(userData ? `/api/workspaces/${workspace}/members` : null, fetcher);
 
+  // const [chat, onChangeChat] = useInput('');
+  // const onSubmitForm = useCallback (()=>{},[]s)
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     if (textareaRef.current) {
@@ -28,19 +29,18 @@ const ChatBox: VFC<Props> = ({ chat }) => {
     }
   }, []);
 
-  const onSubmitForm = useCallback(()=>{},[])
 
-  // const onKeydownChat = useCallback(
-  //   (e) => {
-  //     if (e.key === 'Enter') {
-  //       if (!e.shiftKey) {
-  //         e.preventDefault();
-  //         onSubmitForm(e);
-  //       }
-  //     }
-  //   },
-  //   [onSubmitForm],
-  // );
+  const onKeydownChat = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        if (!e.shiftKey) {
+          e.preventDefault();
+          onSubmitForm(e);
+        }
+      }
+    },
+    [onSubmitForm],
+  );
 
   const renderSuggestion = useCallback(
     (
@@ -82,7 +82,7 @@ const ChatBox: VFC<Props> = ({ chat }) => {
             data={memberData?.map((v) => ({ id: v.id, display: v.nickname })) || []}
             renderSuggestion={renderSuggestion}
           /> */}
-          <textarea />
+          <textarea value={chat} onChange={onChangeChat} onKeyDown={onKeydownChat} />
         </MentionsTextarea>
         <Toolbox>
           <SendButton
