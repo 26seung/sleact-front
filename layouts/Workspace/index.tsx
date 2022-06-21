@@ -44,10 +44,16 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
     //
 
     useEffect(()=> {
-        socket.on('message');
-        socket.emit();
-        disconnect();
-    },[])
+        if(channelData && userData && socket){
+            socket.emit('login', {id:userData.id, channels: channelData.map((e)=>e.id)})
+        }
+    },[socket, channelData, userData]);
+    
+    useEffect(()=> {
+        return ()=> {
+            disconnect();
+        }
+    },[workspace,disconnect]);
 
     const onLogout = useCallback(()=> {
         axios.post("/api/users/logout",
