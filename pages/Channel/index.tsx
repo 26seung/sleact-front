@@ -1,4 +1,3 @@
-// import Workspace from "@layouts/Workspace";
 import ChatBox from "@components/ChatBox";
 import ChatList from "@components/ChatList";
 import useInput from "@hooks/useInput";
