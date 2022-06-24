@@ -3,7 +3,7 @@ import { IUser } from '@typings/db';
 import fetcher from '@utils/fetcher';
 import React, { useCallback, useEffect, useRef, VFC } from 'react';
 import autosize from 'autosize';
-// import { Mention, SuggestionDataItem } from 'react-mentions';
+import { Mention, SuggestionDataItem } from 'react-mentions';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
@@ -43,9 +43,9 @@ const ChatBox: VFC<Props> = ({ chat, onSubmitForm, onChangeChat, placeholder }) 
     [onSubmitForm],
   );
 
-  const renderSuggestion = useCallback(
+  const renderSuggestion = useCallback(           //  맨션 어떻게 보이는지?
     (
-    //   suggestion: SuggestionDataItem,
+      suggestion: SuggestionDataItem,
       search: string,
       highlightedDisplay: React.ReactNode,
       index: number,
@@ -74,15 +74,15 @@ const ChatBox: VFC<Props> = ({ chat, onSubmitForm, onChangeChat, placeholder }) 
           onChange={onChangeChat}
           onKeyPress={onKeydownChat}
           placeholder={placeholder}
-          ref={textareaRef}
-          // allowSuggestionsAboveCursor
+          inputRef={textareaRef}
+          allowSuggestionsAboveCursor
         >
-          {/* <Mention
-            appendSpaceOnAdd
-            trigger="@"
+          <Mention
+            appendSpaceOnAdd    //  멘션이용하여 불러오면 커서가 자동으로 한칸 띄어주는 기능
+            trigger="@"         // trigger @ 입력하는 순간 맨션기능 활성화
             data={memberData?.map((v) => ({ id: v.id, display: v.nickname })) || []}
             renderSuggestion={renderSuggestion}
-          /> */}
+          />
         </MentionsTextarea>
         <Toolbox>
           <SendButton
