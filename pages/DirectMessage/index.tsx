@@ -10,6 +10,7 @@ import ChatBox from "@components/ChatBox";
 import ChatList from "@components/ChatList";
 import useInput from "@hooks/useInput";
 import axios from "axios";
+import makeSection from "@utils/makeSection";
 
 // workspace 의 children 설정
 const DirectMessage = () => {
@@ -30,7 +31,7 @@ const DirectMessage = () => {
                 content: chat
             })
             .then(()=>{
-                mutateChat(e.data,false)
+                mutateChat(e.data,true)
                 setChat('');
             })
             .catch(console.error)
@@ -42,13 +43,15 @@ const DirectMessage = () => {
         return null;
     }
 
+    const chatSections = makeSection(chatData ? [...chatData].reverse() : [])
+
     return (  
         <Container>
             <Header>
                 <img src={gravatar.url(userData.email,{s:'24px', d:'retro'})} alt={userData.nickname} />
                 <span> {userData.nickname}</span>
             </Header>
-            <ChatList chatData={chatData}/>
+            <ChatList chatSections={chatSections}/>
             <ChatBox chat={chat} onChangeChat={onChangeChat} onSubmitForm={onSubmitForm} />
         </Container>
     );
