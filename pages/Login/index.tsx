@@ -26,7 +26,7 @@ const LogIn = () => {
           )
           .then((res) => {
               console.log("login Data1 : " + res.data)
-              mutate(res.data,false);     // 성공 시 useSWR 사용됨      , true:optimisic ui / false:서버에 보내지 않고 그대로 로컬정보를 정수
+              mutate();     // 성공 시 useSWR 사용됨      , true:optimisic ui / false:서버에 보내지 않고 그대로 로컬정보를 정수
           })
           .catch((error) => {
             setLogInError(error.response?.data?.statusCode === 401);
