@@ -126,7 +126,7 @@ const Workspace: VFC = () => {     // children 을 안쓰는 컴포넌트는 VFC
                 test1
                 <RightMenu>
                     <span onClick={onClickUserProfile}>
-                        <ProfileImg src={gravatar.url(userData.nickname,{size:'28px',default:'retro'})} alt={userData.nickname}/>
+                        <ProfileImg src={gravatar.url(userData.email,{size:'28px',default:'retro'})} alt={userData.nickname}/>
                         {showUserMenu && (
                             <Menu style={{right:0,top:38}} show={showUserMenu} onCloseModal={onCloseUserProfile}>
                             <ProfileModal>
