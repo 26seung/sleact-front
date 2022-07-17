@@ -7,7 +7,7 @@ import regexifyString from 'regexify-string';
 import { Link, useParams } from 'react-router-dom';
 
 interface Props {
-  data: IDM | IChat;
+  data: (IDM | IChat);
 }
 
 // const BACK_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3095' : 'https://sleact.nodebird.com';
